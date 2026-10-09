@@ -57,4 +57,12 @@
     <string name="log_vision_matched">Vision template matched at coordinates (%1$d, %2$d). Executing tap.</string>
     <string name="log_target_point_clicked">Target point #%1$d tapped at (%2$d, %3$d).</string>
     <string name="log_permission_required">Please enable Accessibility Service in Android Settings.</string>
+    
+    <!-- Diagnostics & Logs Export -->
+    <string name="diagnostics_title">Technical Diagnostics &amp; Crash Reports</string>
+    <string name="diagnostics_desc">Export or copy error logs and crash stack traces for troubleshooting.</string>
+    <string name="action_copy_logs">Copy Full Logs</string>
+    <string name="action_export_logs">Share / Export</string>
+    <string name="action_view_crash">View Crash Report</string>
+    <string name="no_crash_recorded">No crash records found. App is running normally.</string>
 </resources>

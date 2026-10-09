@@ -57,4 +57,12 @@
     <string name="log_vision_matched">Шаблон распознан по координатам (%1$d, %2$d). Выполняется тап.</string>
     <string name="log_target_point_clicked">Нажата точка №%1$d по координатам (%2$d, %3$d).</string>
     <string name="log_permission_required">Пожалуйста, включите службу специальных возможностей в настройках Android.</string>
+    
+    <!-- Diagnostics & Logs Export -->
+    <string name="diagnostics_title">Технический журнал и ошибки</string>
+    <string name="diagnostics_desc">Экспорт и копирование логов ошибок и сбоев для диагностики.</string>
+    <string name="action_copy_logs">Скопировать логи</string>
+    <string name="action_export_logs">Поделиться / Экспорт</string>
+    <string name="action_view_crash">Отчет об ошибке</string>
+    <string name="no_crash_recorded">Сбоев не зафиксировано. Приложение работает штатно.</string>
 </resources>

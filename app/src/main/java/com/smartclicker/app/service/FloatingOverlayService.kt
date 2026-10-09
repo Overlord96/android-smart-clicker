@@ -1,12 +1,15 @@
 package com.smartclicker.app.service
 
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
+import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -16,8 +19,10 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import com.smartclicker.app.R
 import com.smartclicker.app.model.TargetPoint
+import com.smartclicker.app.utils.CrashLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,6 +38,7 @@ class FloatingOverlayService : Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private lateinit var windowManager: WindowManager
+    private lateinit var themedContext: Context
 
     // Floating Control Bar
     private var controlBarView: View? = null
@@ -49,11 +55,50 @@ class FloatingOverlayService : Service() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        themedContext = ContextThemeWrapper(this, R.style.Theme_SmartClicker)
         windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         _isOverlayRunning.value = true
 
-        initControlBar()
-        SmartAccessibilityService.emitLog("Floating overlay widget launched")
+        try {
+            startAsForegroundService()
+            initControlBar()
+            CrashLogger.logEvent(this, TAG, "Floating overlay started successfully")
+            SmartAccessibilityService.emitLog("Floating overlay widget launched")
+        } catch (t: Throwable) {
+            CrashLogger.logException(this, TAG, t)
+            Toast.makeText(this, "Error launching floating widget: ${t.message}", Toast.LENGTH_LONG).show()
+            stopSelf()
+        }
+    }
+
+    private fun startAsForegroundService() {
+        val channelId = "smart_clicker_overlay_channel"
+        val channelName = "Smart Clicker Overlay"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Keeps floating widget active over games"
+            }
+            val manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
+        }
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(getString(R.string.floating_overlay_title))
+            .setSmallIcon(android.R.drawable.ic_menu_compass)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setOngoing(true)
+            .build()
+
+        try {
+            startForeground(1001, notification)
+        } catch (e: Exception) {
+            CrashLogger.logException(this, TAG, e)
+        }
     }
 
     private fun getOverlayType(): Int {
@@ -66,7 +111,7 @@ class FloatingOverlayService : Service() {
     }
 
     private fun initControlBar() {
-        val inflater = LayoutInflater.from(this)
+        val inflater = LayoutInflater.from(themedContext)
         controlBarView = inflater.inflate(R.layout.layout_floating_control_bar, null)
 
         controlBarParams = WindowManager.LayoutParams(
@@ -81,7 +126,13 @@ class FloatingOverlayService : Service() {
             y = 300
         }
 
-        windowManager.addView(controlBarView, controlBarParams)
+        try {
+            windowManager.addView(controlBarView, controlBarParams)
+        } catch (e: Exception) {
+            CrashLogger.logException(this, TAG, e)
+            Toast.makeText(this, "Failed to attach floating overlay: ${e.message}", Toast.LENGTH_LONG).show()
+            return
+        }
 
         setupControlBarTouchListener()
         setupControlBarButtons()
@@ -106,7 +157,11 @@ class FloatingOverlayService : Service() {
                 MotionEvent.ACTION_MOVE -> {
                     controlBarParams.x = initialX + (event.rawX - initialTouchX).toInt()
                     controlBarParams.y = initialY + (event.rawY - initialTouchY).toInt()
-                    windowManager.updateViewLayout(controlBarView, controlBarParams)
+                    try {
+                        windowManager.updateViewLayout(controlBarView, controlBarParams)
+                    } catch (e: Exception) {
+                        // ignore layout update race conditions
+                    }
                     true
                 }
                 else -> false
@@ -192,7 +247,7 @@ class FloatingOverlayService : Service() {
 
     private fun addTargetPoint() {
         val newIndex = targetPoints.size + 1
-        val inflater = LayoutInflater.from(this)
+        val inflater = LayoutInflater.from(themedContext)
         val pointView = inflater.inflate(R.layout.layout_target_point, null)
 
         val tvIndex = pointView.findViewById<TextView>(R.id.tvPointIndex)
@@ -223,11 +278,15 @@ class FloatingOverlayService : Service() {
 
         setupTargetPointTouch(pointView, pointParams, targetPoint)
 
-        windowManager.addView(pointView, pointParams)
-        targetPoints.add(targetPoint)
-        targetViews.add(pointView)
-
-        SmartAccessibilityService.emitLog("Added target point #$newIndex at ($initialX, $initialY)")
+        try {
+            windowManager.addView(pointView, pointParams)
+            targetPoints.add(targetPoint)
+            targetViews.add(pointView)
+            SmartAccessibilityService.emitLog("Added target point #$newIndex at ($initialX, $initialY)")
+        } catch (e: Exception) {
+            CrashLogger.logException(this, TAG, e)
+            Toast.makeText(this, "Failed to add target point: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupTargetPointTouch(
@@ -259,7 +318,9 @@ class FloatingOverlayService : Service() {
                     }
                     params.x = initialX + dx
                     params.y = initialY + dy
-                    windowManager.updateViewLayout(view, params)
+                    try {
+                        windowManager.updateViewLayout(view, params)
+                    } catch (e: Exception) {}
 
                     // Target coordinate is the center of the badge
                     targetPoint.x = (params.x + view.width / 2).toFloat()
@@ -281,13 +342,14 @@ class FloatingOverlayService : Service() {
         if (targetPoints.isNotEmpty() && targetViews.isNotEmpty()) {
             val lastView = targetViews.removeAt(targetViews.size - 1)
             val lastPoint = targetPoints.removeAt(targetPoints.size - 1)
-            windowManager.removeView(lastView)
+            try {
+                windowManager.removeView(lastView)
+            } catch (e: Exception) {}
             SmartAccessibilityService.emitLog("Removed target point #${lastPoint.id}")
         }
     }
 
     private fun showPointSettingsDialog(point: TargetPoint) {
-        val themedContext = android.view.ContextThemeWrapper(this, R.style.Theme_SmartClicker)
         val builder = AlertDialog.Builder(themedContext)
         val dialogView = LayoutInflater.from(themedContext).inflate(R.layout.dialog_point_settings, null)
         val tvTitle = dialogView.findViewById<TextView>(R.id.tvPointDialogTitle)
@@ -310,10 +372,9 @@ class FloatingOverlayService : Service() {
     }
 
     private fun showGlobalSettingsDialog() {
-        val themedContext = android.view.ContextThemeWrapper(this, R.style.Theme_SmartClicker)
         val builder = AlertDialog.Builder(themedContext)
         builder.setTitle(R.string.floating_overlay_title)
-        builder.setMessage("Target Points Active: ${targetPoints.size}\nUse (+) to place targets, tap any point to edit delay.")
+        builder.setMessage("Target Points Active: ${targetPoints.size}\nUse (+) to place targets, drag markers over game buttons, tap any point to edit delay.")
         builder.setPositiveButton(R.string.save, null)
         val dialog = builder.create()
         dialog.window?.setType(getOverlayType())
@@ -326,7 +387,6 @@ class FloatingOverlayService : Service() {
         _isOverlayRunning.value = false
         stopClickLoop()
 
-        // Clean up all overlay views
         controlBarView?.let {
             try {
                 windowManager.removeView(it)
@@ -344,9 +404,12 @@ class FloatingOverlayService : Service() {
 
         serviceScope.cancel()
         SmartAccessibilityService.emitLog("Floating overlay widget closed")
+        CrashLogger.logEvent(this, TAG, "Floating overlay stopped")
     }
 
     companion object {
+        private const val TAG = "FloatingOverlayService"
+
         var instance: FloatingOverlayService? = null
             private set
 

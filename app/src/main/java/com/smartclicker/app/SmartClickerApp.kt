@@ -14,6 +14,7 @@ class SmartClickerApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        com.smartclicker.app.utils.CrashLogger.init(this)
     }
 
     companion object {

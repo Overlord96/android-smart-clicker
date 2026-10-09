@@ -180,6 +180,28 @@ class MainActivity : AppCompatActivity() {
             val cooldown = text.toLongOrNull() ?: 500L
             SmartAccessibilityService.setClickCooldown(cooldown)
         }
+
+        // Diagnostics & Error Logs
+        binding.btnCopyLogs.setOnClickListener {
+            com.smartclicker.app.utils.CrashLogger.copyLogsToClipboard(this)
+        }
+
+        binding.btnExportLogs.setOnClickListener {
+            com.smartclicker.app.utils.CrashLogger.shareLogs(this)
+        }
+
+        binding.btnViewCrash.setOnClickListener {
+            val crashLog = com.smartclicker.app.utils.CrashLogger.getLatestCrashLog(this)
+            val message = crashLog ?: getString(R.string.no_crash_recorded)
+            AlertDialog.Builder(this)
+                .setTitle(R.string.action_view_crash)
+                .setMessage(message)
+                .setPositiveButton(R.string.action_copy_logs) { _, _ ->
+                    com.smartclicker.app.utils.CrashLogger.copyLogsToClipboard(this)
+                }
+                .setNegativeButton(R.string.cancel, null)
+                .show()
+        }
     }
 
     private fun handleOverlayToggle() {
@@ -197,10 +219,22 @@ class MainActivity : AppCompatActivity() {
         if (isRunning) {
             FloatingOverlayService.stopOverlay(this)
         } else {
-            val intent = Intent(this, FloatingOverlayService::class.java)
-            startService(intent)
-            // Move activity to back so user is immediately over their game/target app
-            moveTaskToBack(true)
+            try {
+                val intent = Intent(this, FloatingOverlayService::class.java)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ContextCompat.startForegroundService(this, intent)
+                } else {
+                    startService(intent)
+                }
+                binding.root.postDelayed({
+                    try {
+                        moveTaskToBack(true)
+                    } catch (e: Exception) {}
+                }, 300)
+            } catch (e: Exception) {
+                com.smartclicker.app.utils.CrashLogger.logException(this, "MainActivity", e)
+                Toast.makeText(this, "Error starting overlay: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
