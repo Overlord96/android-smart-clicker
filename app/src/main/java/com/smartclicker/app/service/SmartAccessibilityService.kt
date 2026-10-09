@@ -38,6 +38,9 @@ class SmartAccessibilityService : AccessibilityService() {
         super.onServiceConnected()
         instance = this
         _isServiceBound.value = true
+        if (_automationRules.value.isEmpty()) {
+            _automationRules.value = AutomationRule.loadRules(this)
+        }
         emitLog("Accessibility Service connected and ready")
         Log.i(TAG, "SmartAccessibilityService connected.")
     }
@@ -262,11 +265,15 @@ class SmartAccessibilityService : AccessibilityService() {
         private val _clickCooldownMs = MutableStateFlow(500L)
         val clickCooldownMs = _clickCooldownMs.asStateFlow()
 
-        private val _automationRules = MutableStateFlow(AutomationRule.defaultRules())
+        private val _automationRules = MutableStateFlow<List<AutomationRule>>(emptyList())
         val automationRules = _automationRules.asStateFlow()
 
         private val _logFlow = MutableSharedFlow<LogEntry>(extraBufferCapacity = 100)
         val logFlow = _logFlow.asSharedFlow()
+
+        fun updateRules(rules: List<AutomationRule>) {
+            _automationRules.value = rules
+        }
 
         fun setAutomationRunning(running: Boolean) {
             _isAutomationRunning.value = running

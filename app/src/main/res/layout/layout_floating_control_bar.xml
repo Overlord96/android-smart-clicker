@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/floatingBarRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_floating_bar"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="6dp"
+    android:paddingVertical="8dp">
+
+    <!-- Drag handle indicator -->
+    <View
+        android:id="@+id/btnDragHandle"
+        android:layout_width="20dp"
+        android:layout_height="4dp"
+        android:background="#60FFFFFF"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Play / Pause -->
+    <ImageButton
+        android:id="@+id/btnPlayPause"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_play"
+        android:contentDescription="Play/Pause" />
+
+    <!-- Add Target Point (+) -->
+    <ImageButton
+        android:id="@+id/btnAddPoint"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Add target point" />
+
+    <!-- Remove Target Point (-) -->
+    <ImageButton
+        android:id="@+id/btnRemovePoint"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_remove"
+        android:contentDescription="Remove target point" />
+
+    <!-- Settings (⚙) -->
+    <ImageButton
+        android:id="@+id/btnSettings"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_settings"
+        android:contentDescription="Settings" />
+
+    <!-- Close (✕) -->
+    <ImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_close"
+        android:contentDescription="Close" />
+
+</LinearLayout>

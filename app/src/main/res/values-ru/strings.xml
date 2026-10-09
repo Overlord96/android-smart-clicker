@@ -12,6 +12,27 @@
     <string name="status_running">Автоматизация: Активна</string>
     <string name="status_stopped">Автоматизация: Остановлена</string>
     
+    <!-- Floating Overlay Section -->
+    <string name="floating_overlay_title">Плавающая панель кликера (Настройка точек)</string>
+    <string name="floating_overlay_desc">Отображать плавающий виджет с перемещаемыми точками кликов прямо поверх любой игры.</string>
+    <string name="action_start_overlay">Запустить плавающий виджет</string>
+    <string name="action_stop_overlay">Закрыть плавающий виджет</string>
+    <string name="overlay_permission_required">Необходимо разрешение на отображение поверх других приложений.</string>
+    <string name="target_point_settings">Настройки точки №%1$d</string>
+    <string name="point_delay_label">Задержка до следующего клика (мс):</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    
+    <!-- Custom Trigger Rules Section -->
+    <string name="rules_title">Пользовательские триггеры</string>
+    <string name="action_add_rule">Добавить правило</string>
+    <string name="dialog_add_rule_title">Новое правило триггера</string>
+    <string name="rule_name_hint">Название правила (напр. Бой с боссом)</string>
+    <string name="rule_triggers_hint">Слова-триггеры через запятую (напр. Старт, Забрать, ОК)</string>
+    <string name="rule_view_id_hint">ID элемента интерфейса (необязательно)</string>
+    <string name="rule_cooldown_hint">Кулдаун (мс)</string>
+    <string name="delete_rule">Удалить</string>
+    
     <!-- Actions -->
     <string name="action_start">Запустить автоматизацию</string>
     <string name="action_stop">Остановить автоматизацию</string>
@@ -34,5 +55,6 @@
     <string name="log_automation_stopped">Автоматизация остановлена.</string>
     <string name="log_trigger_matched">Обнаружен триггер: "%1$s" в %2$s. Выполняется клик.</string>
     <string name="log_vision_matched">Шаблон распознан по координатам (%1$d, %2$d). Выполняется тап.</string>
+    <string name="log_target_point_clicked">Нажата точка №%1$d по координатам (%2$d, %3$d).</string>
     <string name="log_permission_required">Пожалуйста, включите службу специальных возможностей в настройках Android.</string>
 </resources>

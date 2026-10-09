@@ -12,6 +12,27 @@
     <string name="status_running">Automation: Active</string>
     <string name="status_stopped">Automation: Stopped</string>
     
+    <!-- Floating Overlay Section -->
+    <string name="floating_overlay_title">Floating Clicker Overlay (Target Points)</string>
+    <string name="floating_overlay_desc">Display floating widget with draggable target points directly over any game.</string>
+    <string name="action_start_overlay">Launch Floating Widget</string>
+    <string name="action_stop_overlay">Close Floating Widget</string>
+    <string name="overlay_permission_required">Please grant Overlay permission to draw over games.</string>
+    <string name="target_point_settings">Target Point %1$d Settings</string>
+    <string name="point_delay_label">Delay before next click (ms):</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Custom Trigger Rules Section -->
+    <string name="rules_title">Smart Trigger Rules</string>
+    <string name="action_add_rule">Add Rule</string>
+    <string name="dialog_add_rule_title">New Trigger Rule</string>
+    <string name="rule_name_hint">Rule Name (e.g. Boss Fight)</string>
+    <string name="rule_triggers_hint">Trigger texts (comma separated, e.g. Start, Claim, OK)</string>
+    <string name="rule_view_id_hint">Optional View ID</string>
+    <string name="rule_cooldown_hint">Cooldown (ms)</string>
+    <string name="delete_rule">Delete</string>
+    
     <!-- Actions -->
     <string name="action_start">Start Automation</string>
     <string name="action_stop">Stop Automation</string>
@@ -34,5 +55,6 @@
     <string name="log_automation_stopped">Smart automation stopped.</string>
     <string name="log_trigger_matched">Trigger detected: "%1$s" at %2$s. Executing click.</string>
     <string name="log_vision_matched">Vision template matched at coordinates (%1$d, %2$d). Executing tap.</string>
+    <string name="log_target_point_clicked">Target point #%1$d tapped at (%2$d, %3$d).</string>
     <string name="log_permission_required">Please enable Accessibility Service in Android Settings.</string>
 </resources>

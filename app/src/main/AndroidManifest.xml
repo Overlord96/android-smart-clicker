@@ -37,6 +37,11 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
+        <!-- Floating Overlay Service for Target Points -->
+        <service
+            android:name=".service.FloatingOverlayService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

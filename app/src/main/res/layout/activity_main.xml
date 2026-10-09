@@ -6,242 +6,347 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:fillViewport="true">
 
-        <!-- Top Header & Language Toggle -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:id="@+id/tvAppTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_dashboard"
-                android:textColor="@color/text_primary"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLanguageToggle"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:text="@string/action_switch_language"
-                android:textColor="@color/accent"
-                app:strokeColor="@color/accent" />
-        </RelativeLayout>
-
-        <!-- Status Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/surface"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/surface_variant"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/status_title"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:textAllCaps="true" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="8dp">
-
-                    <View
-                        android:id="@+id/viewStatusIndicator"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:background="@drawable/shape_status_indicator"
-                        android:layout_marginEnd="10dp" />
-
-                    <TextView
-                        android:id="@+id/tvServiceStatus"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/status_disabled"
-                        android:textColor="@color/text_primary"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvAutomationStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/status_stopped"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGrantPermission"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/action_enable_permission"
-                    android:textColor="@color/accent"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Configuration Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/surface"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:strokeColor="@color/surface_variant"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mode_title"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:textAllCaps="true" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchNodeEngine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/mode_node_parsing"
-                    android:textColor="@color/text_primary" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchVisionEngine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:text="@string/mode_vision_fallback"
-                    android:textColor="@color/text_primary" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="6dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/interval_label"
-                        android:textColor="@color/text_secondary" />
-
-                    <EditText
-                        android:id="@+id/etCooldownMs"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:text="500"
-                        android:textColor="@color/text_primary"
-                        android:gravity="center"
-                        android:background="@drawable/shape_input_bg"
-                        android:padding="6dp" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Controls: Start / Stop -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnToggleAutomation"
-                android:layout_width="0dp"
-                android:layout_height="54dp"
-                android:layout_weight="1"
-                android:text="@string/action_start"
-                android:textSize="16sp"
-                app:cornerRadius="10dp"
-                app:backgroundTint="@color/status_green" />
+            <!-- Top Header & Language Toggle -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:id="@+id/tvAppTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_dashboard"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLanguageToggle"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/action_switch_language"
+                    android:textColor="@color/accent"
+                    app:strokeColor="@color/accent" />
+            </RelativeLayout>
+
+            <!-- Status Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/surface_variant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status_title"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="6dp">
+
+                        <View
+                            android:id="@+id/viewStatusIndicator"
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:background="@drawable/shape_status_indicator"
+                            android:layout_marginEnd="10dp" />
+
+                        <TextView
+                            android:id="@+id/tvServiceStatus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/status_disabled"
+                            android:textColor="@color/text_primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvAutomationStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/status_stopped"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGrantPermission"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/action_enable_permission"
+                        android:textColor="@color/accent"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Floating Overlay (Target Points) Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/primary"
+                app:strokeWidth="1.5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/floating_overlay_title"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/floating_overlay_desc"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnToggleOverlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="@string/action_start_overlay"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp"
+                        app:backgroundTint="@color/primary" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Custom Trigger Rules Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/surface_variant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rules_title"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAddRule"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/action_add_rule"
+                            android:textColor="@color/accent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true" />
+
+                    </RelativeLayout>
+
+                    <!-- RecyclerView for rules -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRules"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Configuration & Modes Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/surface_variant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mode_title"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textAllCaps="true" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchNodeEngine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/mode_node_parsing"
+                        android:textColor="@color/text_primary" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchVisionEngine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/mode_vision_fallback"
+                        android:textColor="@color/text_primary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/interval_label"
+                            android:textColor="@color/text_secondary" />
+
+                        <EditText
+                            android:id="@+id/etCooldownMs"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="500"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center"
+                            android:background="@drawable/shape_input_bg"
+                            android:padding="6dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Controls: Start / Stop -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToggleAutomation"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="@string/action_start"
+                    android:textSize="15sp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="@color/status_green" />
+
+            </LinearLayout>
+
+            <!-- Log Section Header -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logs_title"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClearLogs"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_clear_logs"
+                    android:textColor="@color/text_secondary"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <!-- RecyclerView for Logs -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLogs"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@drawable/shape_log_bg"
+                android:padding="8dp" />
 
         </LinearLayout>
-
-        <!-- Log Section Header -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/logs_title"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnClearLogs"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/action_clear_logs"
-                android:textColor="@color/text_secondary"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true" />
-
-        </RelativeLayout>
-
-        <!-- RecyclerView for Logs -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvLogs"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_log_bg"
-            android:padding="8dp" />
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
