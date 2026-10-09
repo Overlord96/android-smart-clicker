@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Smart Clicker</string>
+    <string name="accessibility_service_label">Smart Clicker Accessibility Service</string>
+    <string name="accessibility_service_description">Provides automated node parsing, trigger detection, and programmatic touch automation for third-party games and apps.</string>
+    
+    <!-- UI Strings -->
+    <string name="title_dashboard">Smart Game Automation</string>
+    <string name="status_title">Service Status</string>
+    <string name="status_enabled">Service: Enabled</string>
+    <string name="status_disabled">Service: Disabled</string>
+    <string name="status_permission_missing">Accessibility permission not granted</string>
+    <string name="status_running">Automation: Active</string>
+    <string name="status_stopped">Automation: Stopped</string>
+    
+    <!-- Actions -->
+    <string name="action_start">Start Automation</string>
+    <string name="action_stop">Stop Automation</string>
+    <string name="action_enable_permission">Grant Accessibility</string>
+    <string name="action_clear_logs">Clear Logs</string>
+    <string name="action_switch_language">Русский</string>
+    
+    <!-- Settings / Mode -->
+    <string name="mode_title">Detection Engines</string>
+    <string name="mode_node_parsing">Node Tree Parsing (Accessibility)</string>
+    <string name="mode_vision_fallback">Vision / Template Matching (Unity/Canvas)</string>
+    <string name="interval_label">Click Cooldown (ms):</string>
+    
+    <!-- Logs -->
+    <string name="logs_title">Activity &amp; Trigger Log</string>
+    <string name="log_empty">No activity recorded yet.</string>
+    <string name="log_service_connected">Accessibility Service connected successfully.</string>
+    <string name="log_service_disconnected">Accessibility Service disconnected.</string>
+    <string name="log_automation_started">Smart automation started.</string>
+    <string name="log_automation_stopped">Smart automation stopped.</string>
+    <string name="log_trigger_matched">Trigger detected: "%1$s" at %2$s. Executing click.</string>
+    <string name="log_vision_matched">Vision template matched at coordinates (%1$d, %2$d). Executing tap.</string>
+    <string name="log_permission_required">Please enable Accessibility Service in Android Settings.</string>
+</resources>

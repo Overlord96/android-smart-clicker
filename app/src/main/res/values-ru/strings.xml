@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Smart Clicker</string>
+    <string name="accessibility_service_label">Служба автокликера Smart Clicker</string>
+    <string name="accessibility_service_description">Обеспечивает автоматический парсинг дерева элементов интерфейса, распознавание триггеров и программное выполнение кликов для игр и приложений.</string>
+    
+    <!-- UI Strings -->
+    <string name="title_dashboard">Умная автоматизация игр</string>
+    <string name="status_title">Статус службы</string>
+    <string name="status_enabled">Служба: Включена</string>
+    <string name="status_disabled">Служба: Отключена</string>
+    <string name="status_permission_missing">Разрешение спец. возможностей не предоставлено</string>
+    <string name="status_running">Автоматизация: Активна</string>
+    <string name="status_stopped">Автоматизация: Остановлена</string>
+    
+    <!-- Actions -->
+    <string name="action_start">Запустить автоматизацию</string>
+    <string name="action_stop">Остановить автоматизацию</string>
+    <string name="action_enable_permission">Включить в настройках</string>
+    <string name="action_clear_logs">Очистить логи</string>
+    <string name="action_switch_language">English</string>
+    
+    <!-- Settings / Mode -->
+    <string name="mode_title">Движки распознавания</string>
+    <string name="mode_node_parsing">Парсинг дерева нод (Accessibility)</string>
+    <string name="mode_vision_fallback">Компьютерное зрение / Шаблоны (Unity/Canvas)</string>
+    <string name="interval_label">Задержка между кликами (мс):</string>
+    
+    <!-- Logs -->
+    <string name="logs_title">Журнал событий и триггеров</string>
+    <string name="log_empty">События пока отсутствуют.</string>
+    <string name="log_service_connected">Служба специальных возможностей успешно подключена.</string>
+    <string name="log_service_disconnected">Служба специальных возможностей отключена.</string>
+    <string name="log_automation_started">Автоматизация запущена.</string>
+    <string name="log_automation_stopped">Автоматизация остановлена.</string>
+    <string name="log_trigger_matched">Обнаружен триггер: "%1$s" в %2$s. Выполняется клик.</string>
+    <string name="log_vision_matched">Шаблон распознан по координатам (%1$d, %2$d). Выполняется тап.</string>
+    <string name="log_permission_required">Пожалуйста, включите службу специальных возможностей в настройках Android.</string>
+</resources>
